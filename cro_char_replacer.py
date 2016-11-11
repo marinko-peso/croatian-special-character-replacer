@@ -18,8 +18,8 @@ ALLOWED_FILE_TYPES = ('.srt', '.txt', '.sub')
 # Define encoding values.
 # There is no way to apsulutely correctly quess origin encoding so doing an educated guess.
 # Change settings if working with different origin encoding.
-READ_ENCODING = "cp1250"
-WRITE_ENCODING = "utf8"
+SOURCE_ENCODING = "cp1250"
+DESTINATION_ENCODING = "utf8"
 
 
 def process_file(file_name):
@@ -36,12 +36,12 @@ def process_file(file_name):
 		print "-> %s is not supported. No action taken." % file_name
 		return
 
-	read_file = io.open(file_name, "r", encoding=READ_ENCODING)
+	read_file = io.open(file_name, "r", encoding=SOURCE_ENCODING)
 	read_file_content = read_file.read()
-	read_file_content = read_file_content.encode(WRITE_ENCODING)
+	read_file_content = read_file_content.encode(DESTINATION_ENCODING)
 	read_file.close()
 
-	write_file = io.open(file_name, "w", encoding=WRITE_ENCODING)
+	write_file = io.open(file_name, "w", encoding=DESTINATION_ENCODING)
 	write_file_content = replace_characters(read_file_content)
 	write_file.write(write_file_content)
 	write_file.close()
@@ -82,7 +82,7 @@ def replace_characters(content_to_change):
 	for old_char, new_char in CHARS_TO_REPLACE.iteritems():
 		content_to_change = content_to_change.replace(old_char, new_char)
 
-	return unicode(content_to_change, WRITE_ENCODING)
+	return unicode(content_to_change, DESTINATION_ENCODING)
 
 
 def allowed_file_type(file_name):
