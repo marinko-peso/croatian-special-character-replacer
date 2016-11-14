@@ -11,7 +11,7 @@ This script will open the file, replace all the characters in their original for
 If you provide the script with a directory it will automatically detect it and attempt to find all subtitle files inside and process them. In case it finds another directory inside, it will enter it and also find and process all subitle files. This will go as deep in the folder structure as required.
 
 ### Customization
-You can customize the script to do whatever character replacement it has to do and with whatever encoding by just modifying the settings on top of the file
+You can customize the script to do whatever character replacement you want it to do and with whatever encoding by just modifying the settings on top of the file.
 - CHARS_TO_REPLACE - characters to replace in the files.
 - ALLOWED_FILE_TYPES - which file types are allowed to be processed.
 - SOURCE_ENCODING - estimated encoding of the source file.
