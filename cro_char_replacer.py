@@ -36,15 +36,33 @@ def process_file(file_name):
 		return
 
 	read_file = io.open(file_name, "r", encoding=SOURCE_ENCODING)
+	# Only start the process if the file is not already processed or already has characters.
 	read_file_content = read_file.read()
-	read_file_content = read_file_content.encode(DESTINATION_ENCODING)
-	read_file.close()
+	if not is_file_already_processed(read_file_content, file_name):
+		read_file_content = read_file_content.encode(DESTINATION_ENCODING)
+		read_file.close()
 
-	write_file = io.open(file_name, "w", encoding=DESTINATION_ENCODING)
-	write_file_content = replace_characters(read_file_content)
-	write_file.write(write_file_content)
-	write_file.close()
-	print "--> %s successfuly processed." % file_name
+		write_file = io.open(file_name, "w", encoding=DESTINATION_ENCODING)
+		write_file_content = replace_characters(read_file_content)
+		write_file.write(write_file_content)
+		write_file.close()
+		print "--> %s successfuly processed." % file_name
+
+
+def is_file_already_processed(file_content, file_name):
+	"""
+	Check do we have characters we want to replace already in the file.
+	In case they exist we skip this file.
+	"""
+	char_found = False
+	file_content_to_search = file_content.encode(SOURCE_ENCODING)
+	for des_char, char in CHARS_TO_REPLACE:
+		if char in file_content_to_search:
+			char_found = True
+			break
+	if char_found:
+		print "--> %s already processed, skipping..." % file_name
+	return char_found
 
 
 def process_directory(dir_name):
